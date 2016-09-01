@@ -1,8 +1,9 @@
 import Vapor
-import VaporTLS
+import TLS
+import Transport
 import HTTP
 
-extension HTTP.Client where ClientStreamType: TLSClientStream {
+extension HTTP.Client {
     static func loadRealtimeApi(token: String, simpleLatest: Bool = true, noUnreads: Bool = true) throws -> HTTP.Response {
         let headers: [HeaderKey: String] = ["Accept": "application/json; charset=utf-8"]
         let query: [String: CustomStringConvertible] = [
@@ -17,7 +18,7 @@ extension HTTP.Client where ClientStreamType: TLSClientStream {
 }
 
 extension Bool {
-    private var queryInt: Int {
+    fileprivate var queryInt: Int {
         // slack uses 1 / 0 in their demo
         return self ? 1 : 0
     }
