@@ -8,7 +8,7 @@ guard let token = config["bot-config", "token"]?.string else { throw BotError.mi
 let rtmResponse = try BasicClient.loadRealtimeApi(token: token)
 guard let webSocketURL = rtmResponse.data["url"]?.string else { throw BotError.invalidResponse }
 
-try WebSocket.connect(to: webSocketURL) { ws in
+try WebSocket.connect(to: webSocketURL, protocols: ["https"]) { ws in
     print("Connected to \(webSocketURL)")
 
     ws.onText = { ws, text in
